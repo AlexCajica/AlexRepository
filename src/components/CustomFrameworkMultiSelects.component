@@ -1,0 +1,83 @@
+<!--
+/**************************************************************************************
+ * Create by:   Deloitte Consulting LLP.
+ * CreateDate:  03/31/2016
+ * Description: Visualforce Component - Multi Select.
+ *
+ *  Modification Log:
+ *  ------------------------------------------------------------------------------
+ *  * Version       Date            Author                  Description
+ *  * ----------------------------------------------------------------------------
+ *  * 1.0           03/31/2016      Alejandro Cajica      Initial version.
+ **************************************************************************************/
+-->
+<apex:component access="global">
+    <apex:includeScript value="{!URLFOR($Resource.Custom_Framework, 'js/bootstrap-multiselect.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.Custom_Framework, 'js/bootstrap-multiselect-collapsible-groups.js')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.Custom_Framework, 'css/bootstrap-multiselect.css')}" />
+    <script>
+            
+        //On document ready.
+        $(document).ready(function() {
+          
+            //Creating multiselect picklists (All Types).
+            createMultiSelect(); 
+        });
+
+        /*
+         * Method name: createMultiSelect
+         * Description: Creates Multi Select Picklists.
+         * Return Type: -
+         * Parameter:   jQuery object / Selector.
+         */
+        function createMultiSelect() {
+        
+        //Creating multiselect picklists - Default.
+            $('.defaultMultiselectPicklist').each(function() {
+                convertMultiselect($(this));
+                $(this).prop('multiple', 'multiple');
+                $(this).multiselect();
+            });
+            
+            //Creating multiselect picklists - With select all option.
+            $('.selectAllMultiselectPicklist').each(function() {
+                convertMultiselect($(this));
+                $(this).prop('multiple', 'multiple');
+                $(this).multiselect({
+                    includeSelectAllOption: true
+                });
+            });
+            
+            //Creating multiselect picklists - With filtering option.
+            $('.filterMultiselectPicklist').each(function() {
+                convertMultiselect($(this));
+                $(this).prop('multiple', 'multiple');
+                $(this).multiselect({
+                    enableFiltering: true
+                });
+            });
+            
+            //Creating multiselect picklists - With select all option and filtering.
+            $('.selectAllAndFilterMultiselectPicklist').each(function() {
+                convertMultiselect($(this));
+                $(this).prop('multiple', 'multiple');
+                $(this).multiselect({
+                    includeSelectAllOption: true,
+                    enableFiltering: true
+                });
+            });
+        }
+        
+        /*
+         * Method name: convertMultiselect
+         * Description: Remove components in multiselect.
+         * Return Type: -
+         * Parameter:   jQuery object / selector.
+         */
+        function convertMultiselect(objComponentSelector) {
+            var objComponent = getJQueryObject(objComponentSelector);
+            objComponent.next('table').remove();
+            objComponent.css('display', '');
+        }
+    </script>
+</apex:component>

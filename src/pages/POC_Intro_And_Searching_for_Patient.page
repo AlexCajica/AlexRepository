@@ -1,0 +1,3 @@
+<apex:page id="Intro_And_Searching_for_Patient" standardController="Case">
+    <flow:interview name="Intro_And_Searching_for_Patient"/>
+</apex:page>
