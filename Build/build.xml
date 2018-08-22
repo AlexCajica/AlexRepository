@@ -1,0 +1,14 @@
+<project name="Sample usage of Salesforce Ant tasks" default="test" basedir="." xmlns:sf="antlib:com.salesforce">
+    <property file="build.properties"/>
+    <property environment="env"/>
+	
+	<taskdef resource="com/salesforce/antlib.xml" uri="antlib:com.salesforce">
+        <classpath>
+        	<pathelement location="../build/ant-salesforce.jar" />
+        </classpath>
+    </taskdef>
+		
+	<target name="Deploy_POC">
+     <sf:deploy username="${sf.demo.username}" password="${sf.demo.password}" serverurl="${sf.serverurl}" maxPoll="${sf.maxPoll}" deployRoot="../src" checkonly = "false"/>
+    </target>
+</project>
