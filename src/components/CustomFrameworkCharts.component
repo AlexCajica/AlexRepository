@@ -1,0 +1,39 @@
+<!--
+/**************************************************************************************
+ * Create by:   Deloitte Consulting LLP.
+ * CreateDate:  03/31/2016
+ * Description: Visualforce Component - Charts.
+ *
+ *  Modification Log:
+ *  ------------------------------------------------------------------------------
+ *  * Version       Date            Author                  Description
+ *  * -----------------------------------------------------------------------------
+ *  * 1.0           03/31/2016      Alejandro Cajica      Initial version.
+ **************************************************************************************/
+-->
+<apex:component access="global">
+    <apex:includeScript value="{!URLFOR($Resource.Custom_Framework, 'js/echarts.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.Custom_Framework, 'js/echarts-customFrameworkTheme.js')}" />
+    <script>
+
+        /*
+         * Method name: createChart
+         * Description: Creates a chart.
+         * Return Type: -
+         * Parameter:   Chart options.
+         */
+        function createChart(objComponentSelector, objOptions) {
+            var objChart;
+            if(objComponentSelector != null) {
+                var objComponent = getJQueryObject(objComponentSelector);
+                if(objComponent.length > 0) {
+                    objChart = echarts.init(objComponent[0], customFrameworkTheme);
+                    if(objChart != null && objOptions != null) {
+                        objChart.setOption(objOptions);
+                    }
+                }
+            }
+            return objChart;
+        }
+    </script>
+</apex:component>

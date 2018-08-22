@@ -1,0 +1,594 @@
+<!--
+/**
+ * Visualforce Page to Create Deployment.
+ * <p /><p />
+ * @author Gabriel Coronel
+ */
+-->
+<apex:page sidebar="false" showHeader="false" standardStylesheets="false" showChat="false" docType="html-5.0" standardController="Deployment_FAT__c" 
+        extensions="DeploymentController_FAT">
+    <c:FrameworkBaseComponent_CF boolCFBaseStyle="true" boolCFValidations="true" boolCFCalendars="false" boolCFDataTables="true" boolCFCharts="false" boolCFInputFiles="false"
+            boolCFMultiSelects="false" boolCFStyle="true" boolCFWizards="false" />
+    <script>
+
+        //Global variables.
+        var objDataTableManualSteps = {
+            "info": true,
+            "paging": true,
+            "ordering": true,
+            "pageLength": 25,
+            "scrollY": "500px",
+            "scrollCollapse": true,
+            "lengthMenu": [ 25, 50, 75, 100 ],
+            "columns": [
+                {"width": "20%"},
+                {"width": "30%"},
+                {"width": "15%"},
+                {"width": "35%"}
+            ]
+        }
+        var objDataTableComponents = {
+            "info": true,
+            "paging": true,
+            "ordering": true,
+            "pageLength": 25,
+            "scrollY": "500px",
+            "scrollCollapse": true,
+            "lengthMenu": [ 25, 50, 75, 100 ],
+            "columns": [
+                {"width": "25%"},
+                {"width": "25%"},
+                {"width": "15%"},
+                {"width": "10%"},
+                {"width": "35%", "orderable": false}
+            ]
+        }
+
+        /**
+         * Function to create data tables on document ready.
+         */
+        $( document ).ready(function() {
+            createDataTable('.dataTable-manualSteps', intDataTableTypeCustom, objDataTableManualSteps);
+        });
+
+        /**
+         * Function to activate rejection reason validations on pre-deployment manual steps.
+         */
+        function activatePreDeploymentValidations() {
+            clearValidations();
+            var objValidCheckboxes = $('.validCheckboxes');
+            if(objValidCheckboxes != null && objValidCheckboxes.length > 0) {
+                for(var intCount = 1; intCount <= objValidCheckboxes.length; intCount++) {
+                    var objCheckbox = $('.idBoolIsApproved' + intCount );
+                    var objInputReason = $('.idRejectionReason' + intCount );
+                    var boolCheckbox = objCheckbox.is(':checked');
+                    var objInputReasonValue =  objInputReason.attr('validate-required');
+                    if(objCheckbox != null && objCheckbox.is(':checked')) {
+                        objInputReason.attr('validate-required', 'false');
+                    } else {
+                        objInputReason.attr('validate-required', 'true');
+                    }
+                }
+            } 
+        }
+
+        /**
+         * Function to disabled rejection reason input field.
+         */
+        function disabledPreDeploymentFields() {
+            clearValidations();
+            var objValidCheckboxes = $('.validCheckboxes');
+            if(objValidCheckboxes != null && objValidCheckboxes.length > 0) {
+                for(var intCount = 1; intCount <= objValidCheckboxes.length; intCount++) {
+                    var objCheckbox = $('.idBoolIsApproved' + intCount );
+                    var objInputReason = $('.idRejectionReason' + intCount );
+                    var boolCheckbox = objCheckbox.is(':checked');
+                    var objInputReasonValue =  objInputReason.attr('validate-required');
+                    if(objCheckbox != null && objCheckbox.is(':checked')) {
+                        objInputReason.attr('disabled', 'true');
+                        objInputReason.val('');
+                    } else {
+                        objInputReason.removeAttr('disabled');
+                    }
+                }
+            } 
+        }
+
+        /**
+         * Function to activate rejection reason validations on post-deployment manual steps.
+         */
+        function activatePostDeploymentValidations() {
+            clearValidations();
+            var objValidCheckboxes = $('.preDeploymentValidCheckboxes');
+            if(objValidCheckboxes != null && objValidCheckboxes.length > 0) {
+                for(var intCount = 1; intCount <= objValidCheckboxes.length; intCount++) {
+                    var objCheckbox = $('.idBoolPostIsApproved' + intCount );
+                    var objInputReason = $('.idPostDeploymentRejectionReason' + intCount );
+                    var boolCheckbox = objCheckbox.is(':checked');
+                    var objInputReasonValue =  objInputReason.attr('validate-required');
+                    if(objCheckbox != null && objCheckbox.is(':checked')) {
+                        objInputReason.attr('validate-required', 'false');
+                    } else {
+                        objInputReason.attr('validate-required', 'true');
+                    }
+                }
+            } 
+        }
+
+        /**
+         * Function to disabled rejection reason input field.
+         */
+        function disabledPostDeploymentFields() {
+            clearValidations();
+            var objValidCheckboxes = $('.preDeploymentValidCheckboxes');
+            if(objValidCheckboxes != null && objValidCheckboxes.length > 0) {
+                for(var intCount = 1; intCount <= objValidCheckboxes.length; intCount++) {
+                    var objCheckbox = $('.idBoolPostIsApproved' + intCount );
+                    var objInputReason = $('.idPostDeploymentRejectionReason' + intCount );
+                    var boolCheckbox = objCheckbox.is(':checked');
+                    if(objCheckbox != null && objCheckbox.is(':checked')) {
+                        objInputReason.attr('disabled', 'true');
+                        objInputReason.val('');
+                    } else {
+                        objInputReason.removeAttr('disabled');
+                    }
+                }
+            } 
+        }
+
+        /**
+         * Function to activate rejection reason validations on deployment components.
+         */
+        function activateDeploymentValidations() {
+            clearValidations();
+            var objValidCheckboxes = $('.validDeploymentCheckboxes');
+            if(objValidCheckboxes != null && objValidCheckboxes.length > 0) {
+                for(var intCount = 1; intCount <= objValidCheckboxes.length; intCount++) {
+                    var objCheckbox = $('.idBoolDeploymentIsApproved' + intCount );
+                    var objInputReason = $('.idDeploymentRejectionReason' + intCount );
+                    var boolCheckbox = objCheckbox.is(':checked');
+                    var objInputReasonValue =  objInputReason.attr('validate-required');
+                    if(objCheckbox != null && objCheckbox.is(':checked')) {
+                        objInputReason.attr('validate-required', 'false');
+                    } else {
+                        objInputReason.attr('validate-required', 'true');
+                    }
+                }
+            } 
+        }
+
+        /**
+         * Function to disabled rejection reason input field.
+         */
+        function disabledDeploymentFields() {
+            clearValidations();
+            var objValidCheckboxes = $('.validDeploymentCheckboxes');
+            if(objValidCheckboxes != null && objValidCheckboxes.length > 0) {
+                for(var intCount = 1; intCount <= objValidCheckboxes.length; intCount++) {
+                    var objCheckbox = $('.idBoolDeploymentIsApproved' + intCount );
+                    var objInputReason = $('.idDeploymentRejectionReason' + intCount );
+                    var boolCheckbox = objCheckbox.is(':checked');
+                    var objInputReasonValue =  objInputReason.attr('validate-required');
+                    if(objCheckbox != null && objCheckbox.is(':checked')) {
+                        objInputReason.attr('disabled', 'true');
+                        objInputReason.val('');
+                    } else {
+                        objInputReason.removeAttr('disabled');
+                    }
+                }
+            } 
+        }
+
+        function compareEnvironments() {
+            clearValidations();
+            var strOrigin = $('.idOrigin').val();
+            var strDestination = $('.idDestination').val();
+            var strNextEnvironment = $('.idNextEnvironment').val();
+            var objAlertMessage = $('.environmentsAlert');
+            objAlertMessage.attr('style', 'display: none;');
+            if(strOrigin == strDestination) {
+                objAlertMessage.attr('style', '');
+                return false;
+            }
+            return true;
+        }
+    </script>
+    <style>
+        .tableHead {
+            background-color: #005fb2 !important;
+        }
+        .tableHeadRow{
+            color: white !important;
+        }
+        .tableHeadRow:hover {
+            color: #005fb2 !important;
+        }
+    </style>
+    <apex:form id="idApexForm">
+        <div class="container-fluid">
+            <apex:actionFunction name="createNewDeployment" action="{!createDeploymentRecord}" 
+                    oncomplete="createDataTable('.dataTable-manualSteps', intDataTableTypeCustom, objDataTableManualSteps);" rerender="idApexForm" />
+            <apex:actionFunction name="goToDeploymentComponents" action="{!goToDeploymentComponents}" 
+                    oncomplete="createDataTable('.dataTable-components', intDataTableTypeCustom, objDataTableComponents);" rerender="idApexForm" />
+            <apex:actionFunction name="goToPreDeploymentManualSteps" action="{!goToPreDeploymentManualSteps}" 
+                    oncomplete="createDataTable('.dataTable-manualSteps', intDataTableTypeCustom, objDataTableManualSteps);" rerender="idApexForm" />
+            <apex:actionFunction name="goToPostDeploymentManualSteps" action="{!goToPostDeploymentManualSteps}" 
+                    oncomplete="createDataTable('.dataTable-manualSteps', intDataTableTypeCustom, objDataTableManualSteps);" rerender="idApexForm" />
+            <apex:actionFunction name="savePreDeploymentManualSteps" action="{!savePreDeploymentManualSteps}" rerender="none" />
+            <apex:actionFunction name="savePostDeploymentManualSteps" action="{!savePostDeploymentManualSteps}" rerender="none" />
+            <apex:actionFunction name="saveDeploymentComponents" action="{!saveDeploymentComponents}" rerender="none" />
+            <apex:actionFunction name="createDeploymentPackage" action="{!createDeploymentPackages}" 
+                    oncomplete="createDataTable('.dataTable-components', intDataTableTypeCustom, objDataTableComponents);" rerender="idApexForm" />
+            <apex:actionFunction name="finishDeployment" action="{!finishDeployment}" 
+                    oncomplete="createDataTable('.dataTable-manualSteps', intDataTableTypeCustom, objDataTableManualSteps);" rerender="idApexForm" />
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="alert alert-danger progress-bar-striped environmentsAlert" role="alert" style="display: none;">
+                        <a href="#" class="alert-link">{!$Label.DeploymentPage_FAT_EnvironmentValidationMessage_FAT}</a>
+                    </div>
+                    <h3>{!$Label.DeploymentPage_FAT_DeploymentTitle_FAT}</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">&nbsp;</div>
+            </div>
+            <div class="row">
+                <div class="col-md-1">
+                    <apex:selectList id="selectFromEnvironment" value="{!strOrigin}" multiselect="false" size="1" disabled="{!OR(boolEditDeployment, boolDeploymentFinished)}" styleClass="idOrigin">
+                        <apex:selectOptions value="{!lstEnviromentsSelectOption}" />
+                    </apex:selectList>
+                </div>
+                <div class="col-md-1" align="center">{!$Label.DeploymentPage_FAT_To_FAT}</div>
+                <div class="col-md-1">
+                    <apex:selectList id="selectToEnvironment" value="{!strDestination}" multiselect="false" size="1" disabled="{!OR(boolEditDeployment, boolDeploymentFinished)}" styleClass="idDestination">
+                        <apex:selectOptions value="{!lstEnviromentsSelectOption}" />
+                    </apex:selectList>
+                </div>
+                <div class="col-md-1" align="center">{!$Label.DeploymentPage_FAT_APIVersion_FAT}</div>
+                <div class="col-md-1">
+                    <apex:input type="text" styleClass="maskField" value="{!strAPIVersion}" html-masking-pattern="00.0" html-placeholder="00.0" html-validation-activated="true" 
+                            html-validate-required="true" html-validate-required-alert-type="4" html-validate-required-error-message="Required field."
+                            html-validation-inline-message="true"  disabled="{!boolDeploymentFinished}" />
+                </div>
+                <div class="col-md-1" align="center">{!$Label.DeploymentPage_FAT_NextEnvironment_FAT}</div>
+                <div class="col-md-1">
+                    <apex:selectList id="selectToNextEnvironment" value="{!strNextEnvironment}" multiselect="false" size="1" disabled="{!OR(boolEditDeployment, boolDeploymentFinished)}" 
+                            styleClass="idNextEnvironment">
+                        <apex:selectOptions value="{!lstEnviromentsSelectOption}" />
+                    </apex:selectList>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-default" onclick="if(compareEnvironments()){createNewDeployment();}" 
+                            style="{!IF(OR(boolEditDeployment, boolDeploymentFinished), 'display: none;', '')}">{!$Label.DeploymentPage_FAT_CreateDeployment_FAT}</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">&nbsp;</div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">&nbsp;</div>
+            </div>
+            <div class="row" style="{!IF(boolPreDeploymentManualSteps, '', 'display: none;')}">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-12" align="center">
+                            <h3>{!$Label.DeploymentPage_FAT_PreDeploymentManualStepsTitle_FAT}</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <apex:outputPanel >
+                                <table class="display dataTable-manualSteps">
+                                    <thead>
+                                        <tr class="tableHead">
+                                            <th class="tableHeadRow">{!$Label.DeploymentPage_FAT_TableManualStepURL_FAT}</th>
+                                            <th class="tableHeadRow">{!$Label.DeploymentPage_FAT_TableDescription_FAT}</th>
+                                            <th class="tableHeadRow">{!$Label.DeploymentPage_FAT_TableApproved_FAT}</th>
+                                            <th class="tableHeadRow">{!$Label.DeploymentPage_FAT_TableRejectionReason_FAT}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <apex:variable var="count" value="{!0}"/> 
+                                        <apex:repeat value="{!lstPreDeploymentManualSteps}" var="objPreDeploymentManualStep">
+                                            <apex:variable var="count" value="{!count + 1}"/>
+                                            <tr>
+                                                <td align="center">
+                                                    <a href="{!objPreDeploymentManualStep.strManualStepURL}" target="_blank">{!$Label.DeploymentPage_FAT_TableView_FAT}</a><br />
+                                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#attachmentModal" onclick="createDataTable();" 
+                                                            style="{!IF(objPreDeploymentManualStep.lstFeatureBranchComponentAttachments.size > 0, '', 'display: none;')}">
+                                                            {!$Label.DeploymentPage_FAT_TableViewAttachments_FAT}</button>
+                                                    <div class="modal fade" id="attachmentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                        <div class="modal-dialog modal-xl" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                    <h4 class="modal-title" id="myModalLabel">{!$Label.DeploymentPage_FAT_TableTitleAttachments_FAT}</h4>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <table class="display dataTable-full">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>{!$Label.DeploymentPage_FAT_AttachmentTableName_FAT}</th>
+                                                                                <th>Position</th>
+                                                                                <th>{!$Label.DeploymentPage_FAT_AttachmentTableDownload_FAT}</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <apex:repeat value="{!objPreDeploymentManualStep.lstFeatureBranchComponentAttachments}" 
+                                                                                    var="objAttachment">
+                                                                                <tr>
+                                                                                    <td>{!objAttachment.Name}</td>
+                                                                                    <td>{!objAttachment.Name}</td>
+                                                                                    <td><apex:outputLink value="{!URLFOR($Action.Attachment.Download, objAttachment.Id)}" 
+                                                                                                target="_blank">{!$Label.DeploymentPage_FAT_AttachmentTableDownloadAttachment_FAT}</apex:outputLink></td>
+                                                                                </tr>
+                                                                            </apex:repeat>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>{!objPreDeploymentManualStep.strManualStep}</td>
+                                                <td align="center">
+                                                    <label class="switch">
+                                                        <apex:inputCheckbox styleClass="idBoolIsApproved{!count} validCheckboxes" 
+                                                                value="{!objPreDeploymentManualStep.boolIsApproved}" disabled="{!boolDeploymentFinished}"
+                                                                onchange="savePreDeploymentManualSteps(); disabledPreDeploymentFields(); return false;" />
+                                                        <span class="slider round"></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <apex:inputTextarea value="{!objPreDeploymentManualStep.strRejectionReason}" styleClass="idRejectionReason{!count}" rows="3" 
+                                                            onblur="savePreDeploymentManualSteps(); return false;" style="width: 100% !important; height: 100% !important" 
+                                                            html-validation-activated="true" html-validate-required="false" html-validate-required-alert-type="4" 
+                                                            html-validate-required-error-message="Required field." html-validation-inline-message="true" 
+                                                            disabled="{!IF(OR(boolDeploymentFinished, objPreDeploymentManualStep.boolIsApproved), 'true', 'false')}" />
+                                                </td>
+                                            </tr>
+                                        </apex:repeat>
+                                    </tbody>
+                                </table>
+                            </apex:outputPanel>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">&nbsp;</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12" align="left">
+                            <button type="button" class="btn btn-primary" onclick="activatePreDeploymentValidations(); if(validateFields()) {goToDeploymentComponents();} ">
+                                    {!$Label.DeploymentPage_FAT_ButtonNext_FAT}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">&nbsp;</div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">&nbsp;</div>
+            </div>
+            <div class="row" style="{!IF(boolDeploymentComponents, '', 'display: none;')}">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-12" align="center">
+                            <h3>{!$Label.DeploymentPage_FAT_DeploymentComponentsTitle_FAT}</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <apex:outputPanel >
+                                <table class="display dataTable-components">
+                                    <thead>
+                                        <tr class="tableHead">
+                                            <th class="tableHeadRow">{!$Label.DeploymentPage_FAT_TableComponentName_FAT}</th>
+                                            <th class="tableHeadRow">{!$Label.DeploymentPage_FAT_TableComponentType_FAT}</th>
+                                            <th class="tableHeadRow">{!$Label.DeploymentPage_FAT_TableIsDeletion_FAT}</th>
+                                            <th class="tableHeadRow">{!$Label.DeploymentPage_FAT_TableApproved_FAT}</th>
+                                            <th class="tableHeadRow">{!$Label.DeploymentPage_FAT_TableRejectionReason_FAT}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <apex:variable var="deploymentCount" value="{!0}"/> 
+                                        <apex:repeat value="{!lstDeploymentComponents}" var="objDeploymentComponent">
+                                            <apex:variable var="deploymentCount" value="{!deploymentCount + 1}"/>
+                                            <tr>
+                                                <td>{!objDeploymentComponent.strComponentName}</td>
+                                                <td>{!objDeploymentComponent.strComponentType}</td>
+                                                <td>{!objDeploymentComponent.strIsDeletion}</td>
+                                                <td>
+                                                    <label class="switch">
+                                                        <apex:inputCheckbox value="{!objDeploymentComponent.boolIsApproved}" 
+                                                                styleClass="idBoolDeploymentIsApproved{!deploymentCount} validDeploymentCheckboxes" disabled="{!boolDeploymentFinished}"
+                                                                onchange="disabledDeploymentFields(); saveDeploymentComponents(); return false;" />
+                                                        <span class="slider round"></span>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <apex:inputTextarea value="{!objDeploymentComponent.strRejectionReason}" 
+                                                            styleClass="idDeploymentRejectionReason{!deploymentCount}" rows="3" onblur="saveDeploymentComponents(); return false;" 
+                                                            style="width: 100% !important; height: 100% !important" html-validation-activated="true" 
+                                                            html-validate-required="false" html-validate-required-alert-type="4" 
+                                                            html-validate-required-error-message="Required field." html-validation-inline-message="true" 
+                                                            disabled="{!IF(OR(boolDeploymentFinished, objDeploymentComponent.boolIsApproved), 'true', 'false')}" />
+                                                </td>
+                                            </tr>
+                                        </apex:repeat>
+                                    </tbody>
+                                </table>
+                            </apex:outputPanel>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">&nbsp;</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12" align="left">
+                            <button type="button" class="btn btn-primary" onclick="goToPreDeploymentManualSteps();">{!$Label.DeploymentPage_FAT_ButtonPrevious_FAT}</button>
+                            <button type="button" class="btn btn-primary" onclick="activateDeploymentValidations(); if(validateFields()) {goToPostDeploymentManualSteps();}">
+                                    {!$Label.DeploymentPage_FAT_ButtonNext_FAT}</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">&nbsp;</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">&nbsp;</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12" align="center">
+                            <button type="button" class="btn btn-success" onclick="activateDeploymentValidations(); if(validateFields()) {createDeploymentPackage();} 
+                                    return false;">{!$Label.DeploymentPage_FAT_ButtonCreateDeploymentPackage_FAT}</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">&nbsp;</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">&nbsp;</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4" align="center">
+                            <apex:outputPanel id="idPreDeploymentDestructiveDownloadPanel" rendered="{!IF(NOT(ISBLANK(idPreDeploymentDestructivePackage)), true, false)}">
+                                <apex:outputLink value="{!URLFOR($Action.Attachment.Download, idPreDeploymentDestructivePackage)}" target="_blank">
+                                    {!$Label.DeploymentPage_FAT_LinkDownloadPreDeploymentDestructivePackage_FAT}</apex:outputLink>
+                            </apex:outputPanel>
+                        </div>
+                        <div class="col-md-4" align="center">
+                            <apex:outputPanel id="idDeploymentDownloadPanel" rendered="{!IF(NOT(ISBLANK(idDeploymentPackage)), true, false)}">
+                                <apex:outputLink value="{!URLFOR($Action.Attachment.Download, idDeploymentPackage)}" target="_blank">
+                                    {!$Label.DeploymentPage_FAT_LinkDownloadDeploymentPackage_FAT}</apex:outputLink>
+                            </apex:outputPanel>
+                        </div>
+                        <div class="col-md-4" align="center">
+                            <apex:outputPanel id="idPostDeploymentDestructiveDownloadPanel" rendered="{!IF(NOT(ISBLANK(idPostDeploymentDestructivePackage)), true, false)}">
+                                <apex:outputLink value="{!URLFOR($Action.Attachment.Download, idPostDeploymentDestructivePackage)}" target="_blank">
+                                    {!$Label.DeploymentPage_FAT_LinkDownloadPostDeploymentDestructivePackage_FAT}</apex:outputLink>
+                            </apex:outputPanel>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">&nbsp;</div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">&nbsp;</div>
+            </div>
+            <div class="row" style="{!IF(boolPostDeploymentManualSteps, '', 'display: none;')}">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-12" align="center">
+                            <h3>{!$Label.DeploymentPage_FAT_PostDeploymentManualStepsTitle_FAT}</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <apex:outputPanel >
+                                <table class="display dataTable-manualSteps">
+                                    <thead>
+                                        <tr class="tableHead">
+                                            <th class="tableHeadRow">{!$Label.DeploymentPage_FAT_TableManualStepURL_FAT}</th>
+                                            <th class="tableHeadRow">{!$Label.DeploymentPage_FAT_TableDescription_FAT}</th>
+                                            <th class="tableHeadRow">{!$Label.DeploymentPage_FAT_TableApproved_FAT}</th>
+                                            <th class="tableHeadRow">{!$Label.DeploymentPage_FAT_TableRejectionReason_FAT}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <apex:variable var="postDeploymentCount" value="{!0}"/> 
+                                        <apex:repeat value="{!lstPostDeploymentManualSteps}" var="objPostDeploymentManualStep">
+                                            <apex:variable var="postDeploymentCount" value="{!postDeploymentCount + 1}"/>
+                                            <tr>
+                                                <td>
+                                                    <a href="{!objPostDeploymentManualStep.strManualStepURL}" target="_blank">{!$Label.DeploymentPage_FAT_TableView_FAT}</a><br />
+                                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#attachmentPostDeploymentModal" 
+                                                            onclick="createDataTable();" style="{!IF(objPostDeploymentManualStep.lstFeatureBranchComponentAttachments.size > 0, '', 'display: none;')}">
+                                                            {!$Label.DeploymentPage_FAT_TableViewAttachments_FAT}</button>
+                                                    <div class="modal fade" id="attachmentPostDeploymentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                        <div class="modal-dialog modal-xl" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                    <h4 class="modal-title" id="myModalLabel">{!$Label.DeploymentPage_FAT_TableTitleAttachments_FAT}</h4>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <table class="display dataTable-full">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>{!$Label.DeploymentPage_FAT_AttachmentTableName_FAT}</th>
+                                                                                <th>Position</th>
+                                                                                <th>{!$Label.DeploymentPage_FAT_AttachmentTableDownload_FAT}</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <apex:repeat value="{!objPostDeploymentManualStep.lstFeatureBranchComponentAttachments}" 
+                                                                                    var="objAttachment">
+                                                                                <tr>
+                                                                                    <td>{!objAttachment.Name}</td>
+                                                                                    <td>{!objAttachment.Name}</td>
+                                                                                    <td><apex:outputLink value="{!URLFOR($Action.Attachment.Download, objAttachment.Id)}" 
+                                                                                                target="_blank">{!$Label.DeploymentPage_FAT_AttachmentTableDownloadAttachment_FAT}</apex:outputLink></td>
+                                                                                </tr>
+                                                                            </apex:repeat>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>{!objPostDeploymentManualStep.strManualStep}</td>
+                                                <td>
+                                                    <label class="switch">
+                                                        <apex:inputCheckbox value="{!objPostDeploymentManualStep.boolIsApproved}" disabled="{!boolDeploymentFinished}"
+                                                                styleClass="idBoolPostIsApproved{!postDeploymentCount} preDeploymentValidCheckboxes" 
+                                                                onchange="disabledPostDeploymentFields(); savePostDeploymentManualSteps(); return false;" />
+                                                        <span class="slider round"></span>
+                                                    </label>
+                                                </td>
+                                                <td> 
+                                                    <apex:inputTextarea value="{!objPostDeploymentManualStep.strRejectionReason}" 
+                                                            styleClass="idPostDeploymentRejectionReason{!postDeploymentCount}" rows="3" 
+                                                            onblur="savePostDeploymentManualSteps(); return false;" style="width: 100% !important; height: 100% !important" 
+                                                            html-validation-activated="true" html-validate-required="false" html-validate-required-alert-type="4" 
+                                                            html-validate-required-error-message="Required field." html-validation-inline-message="true" 
+                                                            disabled="{!IF(OR(boolDeploymentFinished, objPostDeploymentManualStep.boolIsApproved), 'true', 'false')}" />
+                                                </td>
+                                            </tr>
+                                        </apex:repeat>
+                                    </tbody> 
+                                </table>
+                            </apex:outputPanel>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">&nbsp;</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12" align="left">
+                            <button type="button" class="btn btn-primary" onclick="goToDeploymentComponents();">{!$Label.DeploymentPage_FAT_ButtonPrevious_FAT}</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">&nbsp;</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12" align="center">
+                            <button type="button" class="btn btn-danger" onclick="activatePostDeploymentValidations(); if(validateFields()) {finishDeployment(); window.location='{!strDeploymentRecord}';} " style="{!IF(boolDeploymentFinished, 'display: none;', '')}">
+                                {!$Label.DeploymentPage_FAT_ButtonFinishDeployment_FAT}</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">&nbsp;</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </apex:form>
+</apex:page>

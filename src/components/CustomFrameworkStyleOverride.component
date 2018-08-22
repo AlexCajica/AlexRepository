@@ -1,0 +1,674 @@
+<!--
+/**************************************************************************************
+ * Create by:   Deloitte Consulting LLP.
+ * CreateDate:  05/19/2016
+ * Description: Visualforce Component - Styling overried.
+ *
+ *  Modification Log:
+ *  ------------------------------------------------------------------------------
+ *  * Version       Date            Author                  Description
+ *  * ----------------------------------------------------------------------------
+ *  * 1.0           05/19/2016      Raymundo Rodríguez      Initial version.
+ **************************************************************************************/
+-->
+<apex:component >
+    <apex:stylesheet value="{!URLFOR($Resource.Custom_Framework, 'css/awesome-bootstrap-checkbox.css')}" />    
+    <style>    
+        
+        /* Font family - Museo Sans*/
+        @font-face {
+            font-family: "Museo Sans 100";
+            src: url({!URLFOR($Resource.Alternative_Resources, 'fonts/museosans-100.woff2')});
+        }
+        
+        /* Font family - Museo Sans*/
+        @font-face {
+            font-family: "Museo Sans 100 Italic";
+            src: url({!URLFOR($Resource.Alternative_Resources, 'fonts/museosans-100italic.woff2')});
+            font-weight: normal;
+            font-style: normal;
+        }
+        
+        /* Font family - Museo Sans*/
+        @font-face {
+            font-family: "Museo Sans 300";
+            src: url({!URLFOR($Resource.Alternative_Resources, 'fonts/museosans-300.woff2')});
+            font-weight: normal;
+            font-style: normal;
+        }
+        
+        /* Font family - Museo Sans*/
+        @font-face {
+            font-family: "Museo Sans 300 Italic";
+            src: url({!URLFOR($Resource.Alternative_Resources, 'fonts/museosans-300italic.woff2')});
+            font-weight: italic;
+            font-style: italic;
+        }
+        
+        /* Font family - Museo Sans*/
+        @font-face {
+            font-family: "Museo Sans 500";
+            src: url({!URLFOR($Resource.Alternative_Resources, 'fonts/museosans-500.woff2')});
+            font-weight: normal;
+            font-style: normal;
+        }
+        
+        /* Font family - Museo Sans*/
+        @font-face {
+            font-family: "Museo Sans 500 Italic";
+            src: url({!URLFOR($Resource.Alternative_Resources, 'fonts/museosans-500_italic.woff2')}),
+            font-weight: normal;
+            font-style: italic;
+        }
+        
+        /* Font family - Museo Sans*/
+        @font-face {
+            font-family: "Museo Sans 700";
+            src: url({!URLFOR($Resource.Alternative_Resources, 'fonts/museosans-700.woff2')});
+            font-weight: normal;
+            font-style: normal;
+        }
+        
+        /* Font family - Museo Sans*/
+        @font-face {
+            font-family: "Museo Sans 700 Italic";
+            src: url({!URLFOR($Resource.Alternative_Resources, 'fonts/museosans-700italic.woff2')});
+            font-weight: normal;
+            font-style: italic;
+        }
+        
+        /* Font family - Museo Sans*/
+        @font-face {
+            font-family: "Museo Sans 900";
+            src: url({!URLFOR($Resource.Alternative_Resources, 'fonts/museosans-900.woff2')});
+            font-weight: normal;
+            font-style: normal;
+        }
+        
+        /* Font family - Museo Sans*/
+        @font-face {
+            font-family: "Museo Sans 900 Italic";
+            src: url({!URLFOR($Resource.Alternative_Resources, 'fonts/museosans-900italic.woff2')});
+            font-weight: normal;
+            font-style: italic;
+        }
+        
+        /* Font family - Apply to all elements*/
+        * {
+            font: 100%/1.5 "Museo Sans 100", Arial, sans-serif ;
+            color: #6C7077;
+        }
+        
+        .boldFont {
+            font: 100%/1.5 "Museo Sans 700", Arial, sans-serif ;
+        }
+        .normalFont { 
+        font: 100%/1.5 "Museo Sans 300", Arial, sans-serif ;
+        }
+        /* Headers - Uppercase*/
+        h1, h2, h3, h4, h5, h6, h7, h8, th, th > div {
+            color: #008BBF !important;
+            font: 100%/1.5 "Museo Sans 300", Arial, sans-serif;
+            font-weight: initial !important;
+            font-size: 20px;
+            text-transform: none;
+        }
+        
+        /* Headers - Uppercase*/
+        label {
+            color: #6C7077 !important;
+            font: 100%/1.5 "Museo Sans 500", Arial, sans-serif;
+            font-weight: initial !important;
+            font-size: 13px;
+            text-transform: none !important;
+        }
+        
+        .notes {
+            font: 100%/1.5 "Museo Sans 300 Italic", Arial, sans-serif;
+            font-size: 11px;
+        }
+        
+        .bold {
+            font-weight: bold;
+        }
+        
+        .informationMessage {
+            font: 100%/1.5 "Museo Sans 700", Arial, sans-serif;
+            font-size: 15px;
+        }
+        
+        /* General styling. */
+        body {
+            background-color: white;
+        }
+        a {
+             color: #82C341;
+             cursor:pointer;
+             text-decoration: underline;
+        }
+
+        input[type="text"]:disabled, textarea[disabled], select[disabled], .checkbox input[type="checkbox"]:disabled, .radio input[type="radio"]:disabled {
+            background: #EAEAEA !important;
+            background-color: #EAEAEA !important;
+            color: #848484 !important;
+        }
+        
+        /* Enrollment steps. */
+        .step-bar > p {
+            font-size: 13px;
+            margin-top: 10px;
+        }
+        .steps-container ul {
+            width:100%;
+            padding: 30px 0px 40px 0px;
+        }
+        .step-bar {
+            width: 19%;
+            margin-right: 2px;
+            height: 1px;
+            background-color: #A9ABAC;
+            padding-top: 7px;
+            text-align: center;
+            top: -10px;
+        }
+        
+        /*Green top divider*/
+        .topGreenDivider {
+            border-top: 1px solid #82C341;
+        }
+        
+        .bottomGreyDivider {
+            border-bottom: 1px solid #EAEAEA;
+        }
+        
+        /*Grey Section*/
+        .lightGreySection {
+             background-color: #F4F4F4;
+         }
+         
+         .active > p {
+             font-weight: bold;
+         }
+        
+        /* Selected plan. */
+        .selectedHeaderSection h4{
+            color: #ffffff !important;
+        }
+        .selectedHeaderSection {
+            background-color: #008BBF;
+        }   
+        
+        /* Vertical alignment. */
+        .verticalAligmentParent {
+            display: table !important;
+        }
+        .verticalAligmentContent {
+            display: table-cell;
+            vertical-align: middle;
+            text-align: center;
+        }
+        
+        /* Color schema. */
+        
+        /*Backgrounds*/
+        .hf-Background-DarkGreen {
+            background-color: #529535 !important;
+        }
+        .hf-Background-HealthfirstGreen {
+            background-color: #82C341 !important;
+        }        
+        .hf-Background-LightGreen {
+            background-color: #CBDB2F !important;
+        }
+        .hf-Background-HealthfirstYellow {
+            background-color: #FFEF00 !important;
+        }        
+        .hf-Background-DarkBlue {
+            background-color: #003863 !important;
+        }
+        .hf-Background-SkyBlue {
+            background-color: #008BBF !important;
+        }
+        .hf-Background-Violet {
+            background-color: #5E2584 !important;
+        }
+        .hf-Background-Purple {
+            background-color: #5E2584 !important;
+        }
+        .hf-Background-Red {
+            background-color: #AD122A !important;
+        }
+        .hf-Background-Orange {
+            background-color: #F7911D !important;
+        }
+        .hf-Background-Black {
+            background-color: #000000 !important;
+        }
+        .hf-Background-DarkGray {
+            background-color: #474B55 !important;
+        }
+        .hf-Background-LightGray {
+            background-color: #A9ABAC !important;
+        }
+        .hf-Background-AdditionalDarkGray {
+            background-color: #EAEAEA !important;
+        }
+        .hf-Background-AdditionalLightGray {
+            background-color: #F4F4F4 !important;
+        }
+        .hf-Background-White {
+            background-color: #FFFFFF !important;
+        }
+
+        /*Borders*/
+        .hf-Border-DarkGreen {
+            border-color: #529535 !important;
+            border-style: solid;
+            border-width: 2px;
+        }
+        .hf-Border-HealthfirstGreen {
+            border-color: #82C341 !important;
+            border-style: solid;
+            border-width: 2px;
+        }        
+        .hf-Border-LightGreen {
+            border-color: #CBDB2F !important;
+            border-style: solid;
+            border-width: 2px;
+        }
+        .hf-Border-HealthfirstYellow {
+            border-color: #FFEF00 !important;
+            border-style: solid;
+            border-width: 2px;
+        }        
+        .hf-Border-DarkBlue {
+            border-color: #003863 !important;
+            border-style: solid;
+            border-width: 2px;
+        }
+        .hf-Border-SkyBlue {
+            border-color: #008BBF !important;
+            border-style: solid;
+            border-width: 2px;
+        }
+        .hf-Border-Violet {
+            border-color: #5E2584 !important;
+            border-style: solid;
+            border-width: 2px;
+        }
+        .hf-Border-Purple {
+            border-color: #5E2584 !important;
+            border-style: solid;
+            border-width: 2px;
+        }
+        .hf-Border-Red {
+            border-color: #AD122A !important;
+            border-style: solid;
+            border-width: 2px;
+        }
+        .hf-Border-Orange {
+            border-color: #F7911D !important;
+            border-style: solid;
+            border-width: 2px;
+        }
+        .hf-Border-Black {
+            border-color: #000000 !important;
+            border-style: solid;
+            border-width: 2px;
+        }
+        .hf-Border-DarkGray {
+            border-color: #474B55 !important;
+            border-style: solid;
+            border-width: 2px;
+        }
+        .hf-Border-LightGray {
+            border-color: #A9ABAC !important;
+            border-style: solid;
+            border-width: 2px;
+        }
+        .hf-Border-AdditionalDarkGray {
+            border-color: #EAEAEA !important;
+            border-style: solid;
+            border-width: 2px;
+        }
+        .hf-Border-AdditionalLightGray {
+            border-color: #F4F4F4 !important;
+            border-style: solid;
+            border-width: 2px;
+        }
+        .hf-Border-White {
+            border-color: #FFFFFF !important;
+            border-style: solid;
+            border-width: 2px;
+        }        
+        .greyBackgroundGradient {
+          background: #A9ABAC; /* For browsers that do not support gradients */
+          background: -webkit-linear-gradient(#474B55 4%, #A9ABAC 96%); /* For Safari 5.1 to 6.0 */
+          background: -o-linear-gradient(#474B55 4%, #A9ABAC 96%); /* For Opera 11.1 to 12.0 */
+          background: -moz-linear-gradient(#474B55 4%, #A9ABAC 96%); /* For Firefox 3.6 to 15 */
+          background: linear-gradient(#474B55 4%, #A9ABAC 96%); /* Standard syntax */
+        }
+        /*Static Message Box*/
+         .shape {
+          border-style: solid;
+          border-width: 2px;
+          border-color: #529535;
+          padding: 30px 30px 30px 30px;
+          width: 980px;
+          height: 100px;
+          text-align: justify;
+          background: #F7F7F7;
+          margin-left: auto;
+          margin-right: auto;
+        }
+        
+        /*Font color schema*/
+        
+        .hf-Color-DarkGreen {
+            color: #529535 !important;
+        }
+        .hf-Color-HealthfirstGreen {
+            color: #82C341 !important;
+        }  
+        .hf-Color-LightGreen {
+            color: #CBDB2F !important;
+        }
+        .hf-Color-HealthfirstYellow {
+            color: #FFEF00 !important;
+        }        
+        .hf-Color-DarkBlue {
+            color: #003863 !important;
+        }
+        .hf-Color-SkyBlue, a:hover {
+            color: #008BBF !important;
+        }
+        .hf-Color-Violet {
+            color: #5E2584 !important;
+        }
+        .hf-Color-Purple {
+            color: #5E2584 !important;
+        }
+        .hf-Color-Red {
+            color: #AD122A !important;
+        }
+        .hf-Color-Orange {
+            color: #F7911D !important;
+        }
+        .hf-Color-Black {
+            color: #000000 !important;
+        }
+        .hf-Color-DarkGray {
+            color: #474B55 !important;
+        }
+        .hf-Color-LightGray {
+            color: #A9ABAC !important;
+        }
+        .hf-Color-White {
+            color: #FFFFFF !important;
+        }
+        .hf-Color-AdditionalDarkGray {
+            color: #EAEAEA !important;
+        }
+        .hf-Color-AdditionalLightGray {
+            color: #F4F4F4 !important;
+        }
+        
+        /* Buttons override. */
+        /*General Style*/
+        .btn {
+            color: #FFFFFF !important;
+            font: 100%/1.5 "Museo Sans 500", Arial, sans-serif;
+            filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+            background-repeat: repeat-x;
+        }
+
+        .btn:hover {
+            color: #FFFFFF !important;
+            font: 100%/1.5 "Museo Sans 700", Arial, sans-serif ;
+            filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+            background-repeat: repeat-x;
+        }
+        
+        /*Standard button's types*/
+        .btn-default, .btn-default:hover {
+            background-color: #474B55 !important;
+            background-image: -webkit-linear-gradient(top, #474B55 0, #474B55 100%);
+            background-image: -o-linear-gradient(top, #474B55 0, #474B55 100%);
+            background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #474B55 , to(#474B55)));
+            background-image: linear-gradient(to bottom, #474B55 0, #474B55 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#474B55', endColorstr='#474B55', GradientType=0);
+            border: 1px solid #474B55 !important;
+            border-radius: 0px !important;
+        }
+               
+        .btn-success, .btn-success:hover {
+            background-color: #529535 !important;
+            background-image: -webkit-linear-gradient(top, #529535 0, #529535 100%);
+            background-image: -o-linear-gradient(top, #529535 0, #529535 100%);
+            background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #529535 , to(#529535)));
+            background-image: linear-gradient(to bottom, #529535 0, #529535 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#529535', endColorstr='#529535', GradientType=0);
+            border: 1px solid #529535 !important;
+            border-radius: 0px !important;
+        }
+
+       
+        .btn-danger, .btn-danger:hover  {
+            background-color: #AD122A !important;
+            background-image: -webkit-linear-gradient(top, #AD122A 0, #AD122A 100%);
+            background-image: -o-linear-gradient(top, #AD122A 0, #AD122A 100%);
+            background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #AD122A , to(#AD122A)));
+            background-image: linear-gradient(to bottom, #AD122A 0, #AD122A 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#AD122A', endColorstr='#AD122A', GradientType=0);
+            border: 1px solid #AD122A !important;
+            border-radius: 0px !important;
+        }
+        
+        .btn-warning, .btn-warning:hover {
+            background-color: #F7911D !important;
+            background-image: -webkit-linear-gradient(top, #F7911D 0, #F7911D 100%);
+            background-image: -o-linear-gradient(top, #F7911D 0, #F7911D 100%);
+            background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #F7911D , to(#F7911D)));
+            background-image: linear-gradient(to bottom, #F7911D 0, #F7911D 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#F7911D', endColorstr='#F7911D', GradientType=0);
+            border: 1px solid #F7911D  !important;
+            border-radius: 0px !important;
+            color: #000000 !important;
+        }
+
+        .btn-info, .btn-info:hover {
+            background-color: #003863 !important;
+            background-image: -webkit-linear-gradient(top, #003863 0, #003863 100%);
+            background-image: -o-linear-gradient(top, #003863 0, #003863 100%);
+            background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #003863 , to(#003863)));
+            background-image: linear-gradient(to bottom, #003863 0, #003863 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#003863', endColorstr='#003863', GradientType=0);
+            border: 1px solid #003863 !important;
+            border-radius: 0px !important;
+        }
+        
+        .btn-yellow, .btn-yellow:hover {
+            color: #474B55 !important;
+            background-color: #FFEF00 !important;
+            background-image: -webkit-linear-gradient(top, #FFEF00 0, #FFEF00 100%);
+            background-image: -o-linear-gradient(top, #FFEF00 0, #FFEF00 100%);
+            background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #FFEF00 , to(#FFEF00)));
+            background-image: linear-gradient(to bottom, #FFEF00 0, #FFEF00 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFEF00', endColorstr='#FFEF00', GradientType=0);
+            border: 1px solid #474B55 !important;
+            border-radius: 0px !important;
+        }
+        
+        .btn-extended, .btn-extended:hover {
+            padding-left: 4rem;
+            padding-right: 4rem;
+            margin-left: 10px;
+        }
+                        
+        /*White backgrounds*/
+        .hf-background-button-white, .hf-background-button-white:hover {
+            background-color: #FFFFFF !important;
+            background-image: -webkit-linear-gradient(top, #FFFFFF 0, #FFFFFF 100%);
+            background-image: -o-linear-gradient(top, #FFFFFF 0, #FFFFFF 100%);
+            background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #529535 , to(#529535)));
+            background-image: linear-gradient(to bottom, #FFFFFF 0, #FFFFFF 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFFFFF', endColorstr='#FFFFFF', GradientType=0);
+        }
+
+        .btn-info.hf-background-button-white, .btn-info:hover.hf-background-button-white:hover {
+            color: #008BBF !important;
+        }
+        
+        .btn-success.hf-background-button-white, .btn-success:hover.hf-background-button-white:hover {
+            color: #529535 !important;
+        }
+        
+        .btn-warning.hf-background-button-white, .btn-warning:hover.hf-background-button-white:hover {
+            color: #F7911D !important;
+        }
+        
+        .btn-danger.hf-background-button-white, .btn-danger:hover.hf-background-button-white:hover {
+            color: #AD122A !important;
+        }
+                
+        .btn-default.hf-background-button-white, .btn-default:hover.hf-background-button-white:hover {
+            color: #474B55 !important;
+        }
+        
+        /* Validations override. */
+        .invalidInputTextField {
+            border-color: #AD122A;
+            box-shadow: #AD122A 0 0 0 1px inset;
+        }
+        .inlineErrorMessage {
+            color: #AD122A;
+        }
+        
+        .blockMinusButton {
+            height:50px; 
+            width: 50px;
+            padding: 3% 3%;
+            vertical-align: middle;  
+            background-color: #82C341; 
+            display: inline-block;
+        }
+        
+        .blockMinusButton:hover{
+            height:50px; 
+            width: 50px; 
+            vertical-align: middle;  
+            background-color: #82BC90; 
+            display: inline-block;
+        }
+        
+        h1 {
+            color: #008BBF !important;
+        }
+        
+        h2 {
+            color: #008BBF !important;
+        }
+        
+        h3 {
+            color: #008BBF !important;
+        }
+        /*Section Heading*/
+        h4 {
+            color: #008BBF !important;
+        }
+        
+        /*Sub Section Heading*/
+        h5 {
+            color: #474B55 !important;
+        }
+        
+        /*Sub Title Heading*/
+        h6 {
+            color: #008BBF !important;
+        }
+        
+        h7 {
+            color: #008BBF !important;
+        }
+        
+        h7 {
+            color: #008BBF !important;
+        }
+        
+        /*Select green arrow style*/
+        select {
+            webkit-appearance: none;        /*Removes default chrome and safari style*/
+            -moz-appearance: none;          /* Removes Default Firefox style*/
+            background: #FFFFFF url({!URLFOR($Resource.Alternative_Resources, 'images/HFIC_Port_Elements-02.png')}) no-repeat !important;         /*Adds background-image*/
+            background-position: right !important; /*Position of the background-image*/
+            padding: 5px;
+            outline: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+        
+        /*IE Select Green Arrow*/
+        select::-ms-expand {
+            display: none;
+        }
+
+        .select:after {
+            content: &#9668;
+            padding: 12px 8px;
+            position: absolute; right: 10px; top: 0;    
+            z-index: 1;
+            text-align: center;
+            width: 10%;
+            height: 100%;      
+            pointer-events: none;
+            box-sizing: border-box;   
+        }
+        
+        .radio label, .checkbox label{
+            color: #000000 !important;
+            font: 100%/1.5 "Museo Sans 500", Arial, sans-serif;
+        }
+        
+        /*Vertical tabs*/
+        .nav-dashboard > .nav-tabs > li {
+            text-align: center;
+            margin-top: 0px;
+            margin-bottom: 0px;
+             font: 100%/1.5 "Museo Sans 100", Arial, sans-serif ;
+            color: #6C7077;
+        }
+        
+        .nav-dashboard > .nav-tabs > li > a {
+            text-decoration: initial;
+            height: 100px;
+            border-width: 0px 2px 0px 0px;
+            border-right: 2px solid #82C341 !important;
+            padding-top: 20px;
+            font: 100%/1.5 "Museo Sans 700", Arial, sans-serif ;
+            color: #474B55 !important;
+        }
+        
+        .nav-dashboard > .nav-tabs > li.active > a, .nav-dashboard > .nav-tabs > li.active:hover > a, .nav-dashboard > .nav-tabs > li:hover > a {
+            font: 100%/1.5 "Museo Sans 700", Arial, sans-serif;
+            color: #474B55 !important;
+            border-color: #82C341 !important;
+            border-width: 2px 0px 2px 2px;
+            border-right: 0px solid #82C341 !important;
+            background-color: #F4F4F4 !important;
+        }
+        
+        /*Autocomplete styles*/
+        .ui-autocomplete {
+            text-align: right;
+        }
+        
+        .ui-autocomplete .ui-state-focus {
+            background: none !important;
+            background-color: #82C341 !important;
+            border-radius: 0.25rem !important;
+            font-weight: light !important;
+            color: white  !important;
+        }
+    </style>
+</apex:component>
